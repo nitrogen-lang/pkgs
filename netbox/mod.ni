@@ -1,6 +1,6 @@
-import "stdlib/http"
-import "stdlib/collections"
-import "stdlib/encoding/json"
+import "std/http"
+import "std/collections"
+import "std/encoding/json"
 
 const AUTH_HEADER = 'Authorization'
 
