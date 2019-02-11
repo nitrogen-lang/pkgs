@@ -9,23 +9,23 @@ class Client {
     let check_tls = true
     let api_token = ''
 
-    func init(endpoint) {
+    const init = func(endpoint) {
         this.endpoint = endpoint
     }
 
-    func skip_tls_verify() {
+    const skip_tls_verify = func() {
         this.check_tls = false
     }
 
-    func login(api_token) {
+    const login = func(api_token) {
         this.api_token = 'Token ' + api_token
         this._test_token()
     }
 
-    func _make_url(path) { this.endpoint + '/api' + path }
+    const _make_url = func(path) { this.endpoint + '/api' + path }
 
-    func _do_request(method, url) {
-        return http.req(method, url, nil, {
+    const _do_request = func(method, url) {
+        http.req(method, url, nil, {
             "headers": {
                 AUTH_HEADER: this.api_token,
             },
@@ -33,14 +33,14 @@ class Client {
         })
     }
 
-    func _test_token() {
+    const _test_token = func() {
         const r = this._do_request('GET', this._make_url('/extras/_choices'))
         if r.status_code == 403 {
             throw "Invalid API token"
         }
     }
 
-    func get_ipam_addresses(parent) {
+    const get_ipam_addresses = func(parent) {
         const url = this._make_url('/ipam/ip-addresses') + '?parent=' + parent
         let r = this._do_request('GET', url)
         let data = json.decode(r.body)
@@ -53,7 +53,7 @@ class Client {
             ips = ips + data.results
         }
 
-        return ips
+        ips
     }
 }
 

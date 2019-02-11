@@ -9,23 +9,23 @@ class Client {
     let check_tls = true
     let api_token = ''
 
-    func init(endpoint) {
+    const init = func(endpoint) {
         this.endpoint = endpoint
     }
 
-    func skip_tls_verify() {
+    const skip_tls_verify = func() {
         this.check_tls = false
     }
 
-    func login(api_token) {
+    const login = func(api_token) {
         this.api_token = api_token
         this.system()
     }
 
-    func _make_url(path) { this.endpoint + '/api/v0' + path }
+    const _make_url = func(path) { this.endpoint + '/api/v0' + path }
 
-    func _do_request(method, url) {
-        return http.req(method, url, nil, {
+    const _do_request = func(method, url) {
+        http.req(method, url, nil, {
             "headers": {
                 AUTH_HEADER: this.api_token,
             },
@@ -33,20 +33,20 @@ class Client {
         })
     }
 
-    func system() {
+    const system = func() {
         const r = this._do_request('GET', this._make_url('/system'))
-        return json.decode(r.body)
+        json.decode(r.body)
     }
 
-    func get_device(hostname) {
+    const get_device = func(hostname) {
         const r = this._do_request('GET', this._make_url('/devices/' + hostname))
         const data = json.decode(r.body)
 
         if len(data['devices']) > 0 and collections.contains(data.devices[0], 'device_id') {
-            return data['devices'][0]
+            data['devices'][0]
+        } else {
+            nil
         }
-
-        return nil
     }
 }
 
