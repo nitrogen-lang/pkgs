@@ -2,3 +2,5 @@
 name = "@lfkeitel/pkgs"
 description = "Misc. packages"
 homepage = ""
+license = "MIT"
+source = "git+https://github.com/nitrogen-lang/pkgs.git"
